@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import CustomInput from './CustomInput';
 import CountryList from './CountryList';
+import { v4 as uuid } from 'uuid';
 
 class Home extends Component {
     constructor(props) {
@@ -21,10 +22,13 @@ class Home extends Component {
 
     addCountryName () {
         const { country, countries } = this.state;
-        if (country.length > 0 ) {
+
+        const existingCountry = countries.find(countryName => countryName.value.toLowerCase() === country.toLowerCase() );
+
+        if (country.length > 0 && !existingCountry ) {
             this.setState({
                 country: '',
-                countries: [...countries, {id: countries.length + 1, value: country, editable: false}]
+                countries: [...countries, {id: uuid(), value: country, editable: false}]
             })
         } else {
             alert('YOU SHOULD INPUT A NOT EXISTING COUNTRY INSIDE THE INPUT FIELD');
