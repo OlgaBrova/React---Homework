@@ -10,7 +10,7 @@ export default class CountryList extends React.Component {
             'total': null,
             'next': null,
             'previous': null,
-            'renderPeopleDetails': true,
+            'renderPeopleDetails': false,
             'currentId': ''
         }
 
@@ -19,12 +19,15 @@ export default class CountryList extends React.Component {
 
     componentDidUpdate(prevProps, prevState) {
 
-        if(prevState.renderPeopleDetails === false && prevState.currentId !== '' ) {
+        if(
+            this.state.currentId !== prevState.currentId && 
+            this.state.renderPeopleDetails
+        ) {
             alert('Loading Details');
 
             setTimeout(() => {
                 alert('Details Loaded')
-            }, 1000)
+            }, 100)
         }
     }
 
@@ -40,75 +43,89 @@ export default class CountryList extends React.Component {
         })
     }
 
-    handlePeopleDetails = event => {
-        this.setState({
-            renderPeopleDetails: !this.state.renderPeopleDetails,
-            currentId: event.target.id
+    handlePeopleDetails = (event, personId) => {
+        if (this.state.renderPeopleDetails && this.state.currentId === personId) {
 
-        }, ()=> console.log(this.state.renderPeopleDetails, this.state.currentId)
-    )}
+            this.setState({
+                renderPeopleDetails: false,
+                currentId: '',
+            });
+        } else {
+
+            this.setState({
+                renderPeopleDetails: true,
+                currentId: event.target.id
+    
+            }, ()=> console.log(this.state.renderPeopleDetails, this.state.currentId));
+        }
+    }
 
 
     render () {
         console.log('RENDERINGGG.......')
         
         return(
-            <div>
-                <h3>TOTAL: {this.props.total}</h3>
-                <ul>
+            <>
+                {this.props.people.length > 0 ? (
+                    <div>
+                    <h3>TOTAL: {this.props.total}</h3>
+                    <ul>
 
-                {
-                    this.props.people.map(person => (
-                        <>
-                            <li  style={ this.state.currentId === person.name ? { color:'red', background: 'papayawhip'} : {color : 'black'}} >
+                    {
+                        this.props.people.map(person => (
+                            <>
+                                <li  style={ 
+                                    this.state.renderPeopleDetails &&
+                                    this.state.currentId === person.name 
+                                        ? { color:'red', background: 'papayawhip'} 
+                                        : { color : 'black'}
+                                    } 
+                                >
+                                    { person.name } 
+                        
+                                    <button id={person.name}
+                                        onClick={(e) => this.handlePeopleDetails(e, person.name)}
+                                        >
+                                        {this.state.renderPeopleDetails && this.state.currentId === person.name ? 'HIDE DETAILS' : 'SHOW DETAILS'}
+                                    </button>
+                                </li>
 
-                                { person.name } 
-                    
-                                <button id={person.name}
-                                    onClick={this.handlePeopleDetails}
-                                    >
-                                    {this.state.renderPeopleDetails && this.state.currentId === person.name ? 'HIDE DETAILS' : 'SHOW DETAILS'}
-                                </button>
-                            </li>
+                                {this.state.renderPeopleDetails && this.state.currentId === person.name &&
+                                <React.Fragment>
+                                    <table className="tableSwapi">
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Height</th>
+                                            <th>Mass</th>
+                                            <th>Gender</th>
+                                            <th>Hair color</th>
+                                            <th>Skin color</th>
+                                            <th>Birth year</th>
+                                        </tr>
+                                        <tr>
+                                            <td>{person.name}</td>
+                                            <td>{person.height}</td>
+                                            <td>{person.mass}</td>
+                                            <td>{person.gender}</td>
+                                            <td>{person.hair_color}</td>
+                                            <td>{person.skin_color}</td>
+                                            <td>{person.birth_year}</td>
+                                        </tr>
+                                    </table>
+                                </React.Fragment>
+                            }
 
-                            
-                            {this.state.renderPeopleDetails && this.state.currentId === person.name &&
-                            <React.Fragment>
-                                <table className="tableSwapi">
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Height</th>
-                                        <th>Mass</th>
-                                        <th>Gender</th>
-                                        <th>Hair color</th>
-                                        <th>Skin color</th>
-                                        <th>Birth year</th>
-                                    </tr>
-                                    <tr>
-                                        <td>{person.name}</td>
-                                        <td>{person.height}</td>
-                                        <td>{person.mass}</td>
-                                        <td>{person.gender}</td>
-                                        <td>{person.hair_color}</td>
-                                        <td>{person.skin_color}</td>
-                                        <td>{person.birth_year}</td>
-                                    </tr>
-                                </table>
-                            </React.Fragment>
-                        }
+                            </>   
+                        )) 
+                    }          
+                    </ul>
+                </div>
 
-
-                        </>
-                              
-                    )) 
-                }
-                            
-                </ul>
-                
-            </div>
-            
-        )
-        
+                ) : (
+                    <h1>Loading...</h1>
+                )}
+            </> 
+        );   
     }
 }
 

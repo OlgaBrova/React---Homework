@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import CustomInput from './CustomInput';
+// import CustomInput from './CustomInput';
 import CountryList from './CountryList';
 
 class Home extends Component {
@@ -8,19 +8,19 @@ class Home extends Component {
         this.state={
             country: '',
             countries: [],
-            people: [{},{},{},{},{},{},{},{},{},{}],
+            people: [],
             total: null,
             renderCountryList: true,
         }
     }
 
     componentDidMount() {
-        this.fetchSwapiPeople();
+        this.fetchSwapiPeople('https://swapi.dev/api/people');
     }
     
-
-    fetchSwapiPeople = async () => {
-        const response = await fetch(`https://swapi.dev/api/people`);
+    //NOV KOD
+    fetchSwapiPeople = async (fetchedPage) => {
+        const response = await fetch(fetchedPage);
         const formatedResponse = await response.json();
         this.setState({
             people: formatedResponse.results,
@@ -30,37 +30,9 @@ class Home extends Component {
         }, () => {
             console.log(this.state.next);
             console.log(this.state.previous);
-        
         })
-    }
+    } 
 
-
-    fetchSwapiPeopleNextPage = async () => {
-        const response = await fetch(this.state.next);
-        const formatedResponse = await response.json();
-        this.setState({
-            people: formatedResponse.results,
-            total: formatedResponse.count,
-            next: formatedResponse.next,
-            previous: formatedResponse.previous
-        }, () => {
-            console.log(this.state.next);
-            console.log(this.state.previous);
-            
-        })
-    }  
-
-
-    fetchSwapiPeoplePrevPage = async () => {
-        const response = await fetch(this.state.previous);
-        const formatedResponse = await response.json();
-        this.setState({
-            people: formatedResponse.results,
-            total: formatedResponse.count,
-            next: formatedResponse.next,
-            previous: formatedResponse.previous
-        })
-    }  
 
     changeCountryName = event => {
         this.setState({
@@ -97,12 +69,12 @@ class Home extends Component {
     render() {
         return (
             <div>
-                <CustomInput
+                {/* <CustomInput
                     countryName={this.state.country}
                     onNameChange={ this.changeCountryName }
                 />
                 <button onClick={this.addCountryName.bind(this)}>Add Country</button>
-                <hr/>
+                <hr/> */}
                 
                     <CountryList
                         people={this.state.people}
@@ -110,16 +82,30 @@ class Home extends Component {
                     
                     />
 
-                <hr/>
                 
-                <button onClick={this.fetchSwapiPeoplePrevPage} 
-                style={ this.state.previous === null ? { display:'none'} : {display : 'inline-block'}}
-                >Previous Page</button>
+                
+                {this.state.people.length > 0 ? (
+                    <>
+                        <hr/>
+                        <button 
+                            onClick={()=> this.fetchSwapiPeople(this.state.previous)} 
+                            style={ this.state.previous === null ? { display:'none'} : {display : 'inline-block'}}
+                        >Previous Page
+                        </button>
 
-                <button onClick={this.fetchSwapiPeopleNextPage} 
-                style={ this.state.next === null ? { display:'none'} : {display : 'inline-block'}} 
-                >Next Page</button>
-                
+                        <button 
+                            onClick={()=>this.fetchSwapiPeople(this.state.next)} 
+                            style={ this.state.next === null ? { display:'none'} : {display : 'inline-block'}} 
+                        >Next Page
+                        </button>
+                    </>
+
+                    ) : (
+                        <>
+                        </>
+                    )
+                }
+     
             </div>
         )
     }
