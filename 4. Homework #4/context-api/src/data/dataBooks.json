@@ -1,0 +1,51 @@
+[
+    {
+        "id": 1,
+        "name": "The Shining",
+        "published":"(1977)",
+        "authorName": "Stephen King",
+        "genre": "horror",
+        "image": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1353277730l/11588.jpg",
+        "inStock": 6
+    },
+    {
+        "id": 2,
+        "name": "Pet Sematary",
+        "published":"(1983)",
+        "authorName": "Stephen King",
+        "genre": "horror fiction",
+        "image": "https://assets.whsmith.co.uk/product-image/extra-large/9781529378313-10-000_1.jpg",
+        "inStock": 4
+    },
+    {
+        "id": 3,
+        "name": "Philosopher's Stone",
+        "published":"(1997)",
+        "authorName": "J.K.Rowling",
+        "genre": "fantasy",
+        "image": "https://images-na.ssl-images-amazon.com/images/I/51ifu1aebKL._SX332_BO1,204,203,200_.jpg",
+        "inStock": 3
+    },
+    {
+        "id": 4,
+        "name": "Prisoner of Azkaban",
+        "published":"(1999)",
+        "authorName": "J.K.Rowling",
+        "genre": "fantasy",
+        "image": "https://m.media-amazon.com/images/I/51Dfqo6jR5L._SY346_.jpg",
+        "inStock": 7
+    },
+    {
+        "id": 5,
+        "name": "Order of the Phoenix",
+        "published":"(2003)",
+        "authorName": "J.K.Rowling",
+        "genre": "fantasy",
+        "image": "https://upload.wikimedia.org/wikipedia/en/7/70/Harry_Potter_and_the_Order_of_the_Phoenix.jpg",
+        "inStock": 2
+    }
+    
+]
+  
+
+  
