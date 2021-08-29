@@ -1,13 +1,14 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import { Form, InputGroup, FormControl, Button, Container } from 'react-bootstrap';
 import { v4 as uuid } from 'uuid';
 import ShopContext from '../Context/shopContext';
 
-const NewBookForm = (props) => {
+
+const NewBookForm = () => {
     
-    //Ovde imam problem, ne mozam od ShopGlobalState da ja dobijam nizata newProducts za vo nea da gi dodavam novo kreiranite knigi.
-    const { newProducts } = props;
+    const context = useContext(ShopContext);
     
+    //console.log(context.newProducts);
 
     const [ bookName, setBookName ] = useState("");
     const [ published, setPublished ] = useState("");
@@ -17,6 +18,10 @@ const NewBookForm = (props) => {
     const [ price, setPrice ] = useState("");
     const [ inStock, setInStock ] = useState("");
     const [ description, setDescription ] = useState("");
+
+    //Ovde ja dodavam novata kniga na context.newProducts , shto e niza od Shop Global State, no vaka sozdavam nova niza namesto da ja apdejtiram veke postoeckata context.newProducts (shto ne e dobro zatoa shto ne mozam ponatamu da ja koristam za na home page da mi izlezat site knigi vklucuvajki gi i novite). Ne mi uspeva od tuka da ja promenam context.newProducts direkno.
+    const [ newBookArray , setNewBook ] = useState([]);
+    
 
     const bookNameInputRef = useRef(null);
 
@@ -83,12 +88,20 @@ const NewBookForm = (props) => {
         setInStock("");
         setDescription("");
 
-        console.log(newBook);
-        
+        if(newBook) {
+
+            //Ovde ja dodavam novata kniga na nizata no ova e nova niza , ne e vo red vaka bidejki izleguvam od globalniot kontekst. 
+            //Dali ima nacin da ja koristam ovde metodata za promena na state od ShopGlobalState? Mislam na ovaa metoda , updateNewProducts, so koja vo GlobalState gi menuvam newProducts?
+            //const [ newProducts, updateNewProducts ] = useState([]); //ova e od ShopGlobalState
+            setNewBook([...context.newProducts, newBook]);
+           
+            //context.newProducts.push(newBook);
+            
+        }
 
     }
 
-    
+    console.log(newBookArray);
 
 
     return (
@@ -197,7 +210,7 @@ const NewBookForm = (props) => {
 
                 <br />
 
-                <Button variant="primary" type="submit" onClick={handleSubmit} id="submitBtn">
+                <Button variant="primary" type="submit"  onClick={ handleSubmit } id="submitBtn">
                     Submit
                 </Button>
             </Form>

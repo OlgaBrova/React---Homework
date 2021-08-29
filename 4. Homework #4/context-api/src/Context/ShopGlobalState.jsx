@@ -8,15 +8,6 @@ const ShopGlobalState = props => {
     const [ newProducts, updateNewProducts ] = useState([]);
     const [ productById, updateProductById ] = useState([]);
 
-    // const [ bookName, setBookName ] = useState("");
-    // const [ published, setPublished ] = useState("");
-    // const [ authorName, setAuthorName ] = useState("");
-    // const [ genre, setGenre ] = useState("");
-    // const [ imageUrl, setImageUrl ] = useState("");
-    // const [ price, setPrice ] = useState("");
-    // const [ inStock, setInStock ] = useState("");
-    // const [ description, setDescription ] = useState("");
-
 
     useEffect(() => {
         //COMPONENT DID MOUNT
@@ -62,12 +53,11 @@ const ShopGlobalState = props => {
             const productById = newProducts.filter( product => product.id === id);
 
             updateProductById(productById);
-            console.log(productById);
         }
     }
     
-    console.log(newProducts);
-    console.log(productById);
+    //console.log(newProducts);
+    //console.log(productById);
 
     const addProduct = product => {
         // const productInStock = products.map(product => [ ...product, {'inStock': product.inStock - 1 }] );

@@ -52,7 +52,6 @@ function ProductItem(props) {
                                 
                         </Card>
                     </Col>
-
                 )
             }
             

@@ -28,15 +28,6 @@ const Header = () => {
                 </Container>
             </Navbar>
 
-
-
-            {/* <Navbar bg="light" variant='light' expand="lg" id='navbar' collapseOnSelect>
-                <Container id="header">
-                   
-                    Book Store
-        
-                </Container>
-            </Navbar> */}
         </header>
     )
 }
