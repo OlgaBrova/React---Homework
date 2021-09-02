@@ -7,8 +7,6 @@ import ShopContext from '../Context/shopContext';
 const NewBookForm = () => {
     
     const context = useContext(ShopContext);
-    
-    //console.log(context.newProducts);
 
     const [ bookName, setBookName ] = useState("");
     const [ published, setPublished ] = useState("");
@@ -18,10 +16,6 @@ const NewBookForm = () => {
     const [ price, setPrice ] = useState("");
     const [ inStock, setInStock ] = useState("");
     const [ description, setDescription ] = useState("");
-
-    //Ovde ja dodavam novata kniga na context.newProducts , shto e niza od Shop Global State, no vaka sozdavam nova niza namesto da ja apdejtiram veke postoeckata context.newProducts (shto ne e dobro zatoa shto ne mozam ponatamu da ja koristam za na home page da mi izlezat site knigi vklucuvajki gi i novite). Ne mi uspeva od tuka da ja promenam context.newProducts direkno.
-    const [ newBookArray , setNewBook ] = useState([]);
-    
 
     const bookNameInputRef = useRef(null);
 
@@ -90,18 +84,12 @@ const NewBookForm = () => {
 
         if(newBook) {
 
-            //Ovde ja dodavam novata kniga na nizata no ova e nova niza , ne e vo red vaka bidejki izleguvam od globalniot kontekst. 
-            //Dali ima nacin da ja koristam ovde metodata za promena na state od ShopGlobalState? Mislam na ovaa metoda , updateNewProducts, so koja vo GlobalState gi menuvam newProducts?
-            //const [ newProducts, updateNewProducts ] = useState([]); //ova e od ShopGlobalState
-            setNewBook([...context.newProducts, newBook]);
-           
-            //context.newProducts.push(newBook);
-            
+            context.addNewProduct(newBook);
         }
 
     }
 
-    console.log(newBookArray);
+    console.log(context.newProducts);
 
 
     return (

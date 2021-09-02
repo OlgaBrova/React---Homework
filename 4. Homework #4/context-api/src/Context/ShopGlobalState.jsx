@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect  } from 'react';
 import ShopContext from '../Context/shopContext';
 
 const ShopGlobalState = props => {
@@ -10,32 +10,21 @@ const ShopGlobalState = props => {
 
 
     useEffect(() => {
-        //COMPONENT DID MOUNT
-        getProducts();
         
-        const interval = setInterval(() => {
-            getProducts();
-        }, 6000)
-        return () => {
-            console.log("COMPONENT WILL UNMOUNT");
-            clearInterval(interval);
-        }
+        getProducts();
+       
     },[]);
 
     useEffect(() => {
+
         newProductsArray();
-
+         
     }, [products]);
-
-
-    useEffect(() => {
-        //COMPONENT DID UPDATE
-        alert("Cart was updated!");
-    }, [cart]);
 
 
     const newProductsArray = () => {
         if(products !== []){
+            //getProducts();
             const newArray = [ ...products];
             updateNewProducts(newArray);
         }
@@ -49,12 +38,19 @@ const ShopGlobalState = props => {
     }
 
     const getProductById = (id) => {
-        if(newProducts !== []){
-            const productById = newProducts.filter( product => product.id === id);
+        
+        if(products !== []){
+            const productById = products.filter( product => product.id === id);
 
             updateProductById(productById);
         }
     }
+
+    const addNewProduct = (newBook) => {
+       
+        updateNewProducts([...newProducts, newBook]);
+    }
+    
     
     //console.log(newProducts);
     //console.log(productById);
@@ -79,6 +75,7 @@ const ShopGlobalState = props => {
                 newProducts: newProducts,
                 productById: productById,
                 getProductById: getProductById,
+                addNewProduct: addNewProduct,
                 addProduct: addProduct,
                 removeProduct: removeProduct
             } }>

@@ -8,6 +8,7 @@ export default React.createContext({
     productById: [],
     renderCart: false,
     getProductById: id => {}, 
+    addNewProduct: newBook => [],
     addProduct: product => {},
     removeProduct: productId => {}
 })

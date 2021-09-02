@@ -49,7 +49,6 @@ class ProductList extends Component {
                     </Container>      
                 </div>
 
-
                 {this.context.newProducts.length > 0 &&
                     <>
                         <div className="h3Cart">
